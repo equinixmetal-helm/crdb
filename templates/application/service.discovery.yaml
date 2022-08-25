@@ -1,0 +1,49 @@
+{{ range $i, $_ := until (.Values.statefulset.replicas | int) }}
+# The variables used in the `range` are different intentionally,
+# see https://github.com/helm/helm/issues/3684#issuecomment-517922078
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "cockroachdb.name" $ }}-{{ $i }}
+  labels:
+    helm.sh/chart: {{ template "cockroachdb.chart" $ }}
+    app.kubernetes.io/name: {{ template "cockroachdb.name" $ }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+  {{- with $.Values.service.discovery.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with $.Values.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{ template "cockroachdb.fullname" $ }}-{{ $i }}.{{ $.Values.clusterInfo.fqdn }}
+spec:
+  publishNotReadyAddresses: true
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+  {{- $ports := $.Values.service.ports }}
+    # The main port, served by gRPC, serves Postgres-flavor SQL, inter-node
+    # traffic and the CLI.
+    - name: {{ $ports.grpc.external.name | quote }}
+      port: {{ $ports.grpc.external.port | int64 }}
+      targetPort: grpc
+  {{- if ne ($ports.grpc.internal.port | int64) ($ports.grpc.external.port | int64) }}
+    - name: {{ $ports.grpc.internal.name | quote }}
+      port: {{ $ports.grpc.internal.port | int64 }}
+      targetPort: grpc
+  {{- end }}
+    # The secondary port serves the UI as well as health and debug endpoints.
+    - name: {{ $ports.http.name | quote }}
+      port: {{ $ports.http.port | int64 }}
+      targetPort: http
+  selector:
+    app.kubernetes.io/name: {{ template "cockroachdb.name" $ }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    statefulset.kubernetes.io/pod-name: {{ template "cockroachdb.fullname" $ }}-{{ $i }}
+  {{- with $.Values.statefulset.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }} 
+{{ end }}

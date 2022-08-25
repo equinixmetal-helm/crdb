@@ -1,0 +1,42 @@
+{{- if .Values.ingress.enabled -}}
+{{- $ports := .Values.service.ports -}}
+{{- $fullName := include "cockroachdb.fullname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+{{ if or .Values.ingress.annotations }}
+  annotations:
+  {{ range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{ end }}
+{{ end }}
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    helm.sh/chart: {{ template "cockroachdb.chart" . }}
+    app.kubernetes.io/name: {{ template "cockroachdb.name" . }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+{{ if .Values.ingress.labels }}
+{{ toYaml .Values.ingress.labels | nindent 4 }}
+{{ end }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    {{ range .Values.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-internal
+                port:
+                  name: {{ $ports.http.name | quote }}
+    {{ end }}
+  {{ if .Values.ingress.tls }}
+  tls:
+{{ toYaml .Values.ingress.tls | nindent 4 }}
+  {{ end }}
+{{ end }}
