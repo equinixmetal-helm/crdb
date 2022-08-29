@@ -28,11 +28,11 @@ spec:
     size: 521
   commonName: node
   subject:
-    {{- with .Values.tls.certs.certManagerIssuer.organizations }} 
+    {{- with .Values.tls.certs.certManagerIssuer.organizations }}
     organizations: {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- with .Values.tls.ipAddresses }}
-  ipAddress: {{- toYaml . | nindent 4 }}
+  ipAddresses: {{- toYaml . | nindent 4 }}
   {{- end }}
   dnsNames:
     - "localhost"
