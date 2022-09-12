@@ -10,5 +10,5 @@ metadata:
   name: {{ .Values.tls.certs.certManagerIssuer.name }}
 spec:
   ca:
-    secretName: {{ .Values.tls.certs.certManager.existingSercet.name }}
+    secretName: {{ .Values.tls.certs.certManager.existingSecret.name }}
 {{- end -}}
