@@ -404,7 +404,7 @@ tls:
     certManager:
       enabled: true
       # Used to tell the chart where the secret for the CA can be found
-      existingSercet:
+      existingSecret:
           enabled: true
           name: ca-key-pair
       dnsNames:
