@@ -1,6 +1,4 @@
-clusterInfo:
-  environment: "test"
-  fqdn: example.com
+clusterInfo: {}
 
 nameOverride: crdb
 fullnameOverride: crdb
@@ -234,9 +232,9 @@ statefulset:
 
   # Taints to be tolerated by Pods of this StatefulSet.
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  tolerations: 
-    - effect: NoSchedule	
-      key: node-role.kubernetes.io/master	
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
       operator: Exists
   # https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
   topologySpreadConstraints:
@@ -247,7 +245,7 @@ statefulset:
   # Uncomment the following resources definitions or pass them from
   # command line to control the CPU and memory resources allocated
   # by Pods of this StatefulSet.
-  resources: 
+  resources:
     limits:
       cpu: 2
       memory: 4Gi
@@ -303,10 +301,10 @@ service:
     # Additional annotations to apply to this Service.
     annotations:
       metallb.universe.tf/address-pool: cockroachdb
-  
+
   internal:
     enabled: true
-    labels: 
+    labels:
       app.kubernetes.io/component: cockroachdb
     annotations: {}
 
@@ -318,7 +316,7 @@ service:
     # Additional labels to apply to this Service.
     labels:
       app.kubernetes.io/prom: scrape
-      
+
     # Additional annotations to apply to this Service.
     annotations: {}
 
@@ -329,13 +327,13 @@ ingress:
   labels: {}
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS	
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/rewrite-target: /
-  hosts: ['crdb-console.edge-a.ny7.metalkube.net']
+  hosts: ['crdb-console.example.com']
   # - cockroachlabs.com
-  tls: 
-    - hosts:	
-        - crdb-console.edge-a.ny7.metalkube.net	
+  tls:
+    - hosts:
+        - crdb-console.example.com
       secretName: crdb-ingress-tls
 
 # CockroachDB's Prometheus operator ServiceMonitor support
@@ -383,7 +381,6 @@ tls:
   enabled: true
   ipAddresses:
     - "127.0.0.1"
-    - "147.75.207.251"
   serviceAccount:
     # Specifies whether this ServiceAccount should be created.
     create: true
@@ -402,14 +399,14 @@ tls:
     # Enable if the secret is a dedicated TLS.
     # TLS secrets are created by cert-mananger, for example.
     tlsSecret: false
+
     # Use cert-manager to issue certificates for mTLS.
     certManager:
       enabled: true
-      caProvided:
-        enabled: true
-        version: "expires-2026"
-        certName: crdb-crt
-        keyName: crdb-key
+      # Used to tell the chart where the secret for the CA can be found
+      existingSecret:
+          enabled: true
+          name: ca-key-pair
       dnsNames:
         - crdb.example.com
 
@@ -429,7 +426,7 @@ tls:
       # Expiry window of node certificates means a window before actual expiry in which node certs should be rotated.
       nodeCertExpiryWindow: 720h0m0s
       # Set organizations
-      organizations: 
+      organizations:
         - crdb
     # Enable if you run cert-manager >=1.0 on K8s <=1.15 with legacy CRDs
     # Legacy CRDs only support cert-manager.io/v1 API Versions
@@ -461,7 +458,7 @@ networkPolicy:
 toolbox:
   enabled: true
   annotations: {}
-  labels: 
+  labels:
     app.kubernetes.io/component: toolbox
 
 # https://github.com/stakater/Reloader/tree/master/deployments/kubernetes/chart/reloader

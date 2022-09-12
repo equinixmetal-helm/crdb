@@ -1,19 +1,4 @@
 {{- if and .Values.tls.enabled .Values.tls.certs.certManager.enabled }}
-{{- if .Values.tls.certs.certManager.caProvided.enabled }}
-apiVersion: keymaker.equinixmetal.com/v1
-kind: ExternalSecretPull
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: '-1'
-  name: {{ template "cockroachdb.name" . }}-key-pair
-spec:
-  backend: ssm
-  mappings:
-    - key: /{{ .Values.clusterInfo.environment }}/{{ .Values.tls.certs.certManager.caProvided.certName }}/{{ .Values.tls.certs.certManager.caProvided.version }}
-      name: tls.crt
-    - key: /{{ .Values.clusterInfo.environment }}/{{ .Release.Namespace }}/{{ .Values.tls.certs.certManager.caProvided.keyName }}/{{ .Values.tls.certs.certManager.caProvided.version }}
-      name: tls.key
-{{- end }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -25,5 +10,5 @@ metadata:
   name: {{ .Values.tls.certs.certManagerIssuer.name }}
 spec:
   ca:
-    secretName: {{ template "cockroachdb.name" . }}-key-pair
-{{- end }}
+    secretName: {{ .Values.tls.certs.certManager.existingSecret.name }}
+{{- end -}}
