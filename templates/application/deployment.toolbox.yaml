@@ -60,12 +60,12 @@ spec:
         projected:
             sources:
               - secret:
-                  name: {{ template "cockroachdb.name" . }}-node
+                  name: {{ template "cockroachdb.fullname" . }}-node
                   items:
                     - key: ca.crt
                       path: ca.crt
               - secret:
-                  name: {{ template "cockroachdb.name" . }}-root
+                  name: {{ template "cockroachdb.fullname" . }}-root
                   items:
                     - key: tls.crt
                       path: client.root.crt
