@@ -37,6 +37,9 @@ spec:
   dnsNames:
     - "localhost"
     - {{ printf "*.%s" .Values.clusterInfo.fqdn | quote }}
+    - {{ printf "%s-internal" (include "cockroachdb.fullname" .) | quote }}
+    - {{ printf "%s-internal.%s" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
+    - {{ printf "%s-internal.%s.svc.%s" (include "cockroachdb.fullname" .) .Release.Namespace .Values.clusterDomain | quote }}
     - {{ printf "%s-public" (include "cockroachdb.fullname" .) | quote }}
     - {{ printf "%s-public.%s" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
     - {{ printf "%s-public.%s.svc.%s" (include "cockroachdb.fullname" .) .Release.Namespace .Values.clusterDomain | quote }}
