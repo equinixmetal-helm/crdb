@@ -18,7 +18,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: {{ template "cockroachdb.fullname" $ }}-{{ $i }}.{{ $.Values.clusterInfo.fqdn }}
+    external-dns.alpha.kubernetes.io/hostname: {{ $.Release.Name }}-{{ $i }}.{{ $.Values.clusterInfo.fqdn }}
 spec:
   publishNotReadyAddresses: true
   type: LoadBalancer
