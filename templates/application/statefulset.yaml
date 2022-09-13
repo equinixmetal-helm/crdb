@@ -6,7 +6,7 @@ metadata:
   {{- with .Values.statefulset.statefulsetAnnotations }}
      {{- toYaml . | nindent 4 }}
   {{- end }}
-  name: {{ template "cockroachdb.name" . }}
+  name: {{ template "cockroachdb.fullname" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels:
     helm.sh/chart: {{ template "cockroachdb.chart" . }}
