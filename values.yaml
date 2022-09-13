@@ -1,8 +1,5 @@
 clusterInfo: {}
 
-nameOverride: crdb
-fullnameOverride: crdb
-
 # Generated file, DO NOT EDIT. Source: build/templates/values.yaml
 image:
   repository: cockroachdb/cockroach
