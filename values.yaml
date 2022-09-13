@@ -299,8 +299,8 @@ service:
     labels:
       app.kubernetes.io/component: cockroachdb
     # Additional annotations to apply to this Service.
-    annotations:
-      metallb.universe.tf/address-pool: cockroachdb
+    annotations: {}
+    #  metallb.universe.tf/address-pool: custom-ip-pool
 
   internal:
     enabled: true
