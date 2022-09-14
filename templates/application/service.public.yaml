@@ -1,6 +1,4 @@
 # This Service is meant to be used by clients of the database.
-# It exposes a ClusterIP that will automatically load balance connections
-# to the different database Pods.
 kind: Service
 apiVersion: v1
 metadata:
@@ -28,6 +26,7 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.public.type | quote }}
+  externalTrafficPolicy: {{ .Values.service.public.externalTrafficPolicy | quote }}
   ports:
   {{- $ports := .Values.service.ports }}
     # The main port, served by gRPC, serves Postgres-flavor SQL, inter-node

@@ -292,6 +292,9 @@ service:
   # to the different database Pods.
   public:
     type: LoadBalancer
+    # "Local" is a prefer setting for LoadBalancer type Service, it's less impactful for ClusterIP
+    # Local or Cluster
+    externalTrafficPolicy: Local
     # Additional labels to apply to this Service.
     labels:
       app.kubernetes.io/component: cockroachdb
