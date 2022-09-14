@@ -296,7 +296,7 @@ spec:
           projected:
             sources:
             - secret:
-                name: {{ tempalte "cockroachdb.fullname" . }}-node
+                name: {{ template "cockroachdb.fullname" . }}-node
                 items:
                 - key: ca.crt
                   path: ca.crt

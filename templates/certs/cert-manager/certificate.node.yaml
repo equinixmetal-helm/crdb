@@ -50,7 +50,7 @@ spec:
 {{- with .Values.tls.certs.certManager.dnsNames -}}
 {{ toYaml . | nindent 4 }}
 {{- end}}
-  secretName: {{ tempalte "cockroachdb.fullname" . }}-node
+  secretName: {{ template "cockroachdb.fullname" . }}-node
   issuerRef:
     name: {{ .Values.tls.certs.certManagerIssuer.name }}
     kind: {{ .Values.tls.certs.certManagerIssuer.kind }}
