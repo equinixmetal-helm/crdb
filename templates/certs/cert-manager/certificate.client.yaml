@@ -30,7 +30,7 @@ spec:
     {{- with .Values.tls.certs.certManagerIssuer.organizations }}
     organizations: {{- toYaml . | nindent 6 }}
     {{- end }}
-  secretName: {{ template "cockroachdb.fullname" }}-root
+  secretName: {{ template "cockroachdb.fullname" . }}-root
   issuerRef:
     name: {{ .Values.tls.certs.certManagerIssuer.name }}
     kind: {{ .Values.tls.certs.certManagerIssuer.kind }}
