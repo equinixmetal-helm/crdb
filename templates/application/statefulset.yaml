@@ -296,7 +296,7 @@ spec:
           projected:
             sources:
             - secret:
-                name: {{ .Values.tls.certs.nodeSecret }}
+                name: {{ tempalte "cockroachdb.fullname" . }}-node
                 items:
                 - key: ca.crt
                   path: ca.crt

@@ -389,14 +389,8 @@ tls:
   certs:
     # Bring your own certs scenario. If provided, tls.init section will be ignored.
     provided: false
-    # Secret name for the client root cert.
-    clientRootSecret: crdb-root
-    # Secret name for node cert.
-    nodeSecret: crdb-node
-    # Enable if the secret is a dedicated TLS.
     # TLS secrets are created by cert-mananger, for example.
     tlsSecret: false
-
     # Use cert-manager to issue certificates for mTLS.
     certManager:
       enabled: true
