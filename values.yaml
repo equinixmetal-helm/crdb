@@ -1,8 +1,5 @@
 clusterInfo: {}
 
-nameOverride: crdb
-fullnameOverride: crdb
-
 # Generated file, DO NOT EDIT. Source: build/templates/values.yaml
 image:
   repository: cockroachdb/cockroach
@@ -299,8 +296,8 @@ service:
     labels:
       app.kubernetes.io/component: cockroachdb
     # Additional annotations to apply to this Service.
-    annotations:
-      metallb.universe.tf/address-pool: cockroachdb
+    annotations: {}
+    #  metallb.universe.tf/address-pool: custom-ip-pool
 
   internal:
     enabled: true
