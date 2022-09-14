@@ -36,16 +36,18 @@ spec:
   {{- end }}
   dnsNames:
     - "localhost"
+    {{ range $i, $_ := until (.Values.statefulset.replicas | int) }}
+    - {{ template "cockroachdb.fullname" $ }}-{{ $i }}.{{ $.Values.clusterInfo.fqdn }}
+    {{ end }}
     - {{ printf "*.%s" .Values.clusterInfo.fqdn | quote }}
     - {{ printf "%s-internal" (include "cockroachdb.fullname" .) | quote }}
     - {{ printf "%s-internal.%s" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
+    - {{ printf "%s-internal.%s.svc" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
     - {{ printf "%s-internal.%s.svc.%s" (include "cockroachdb.fullname" .) .Release.Namespace .Values.clusterDomain | quote }}
     - {{ printf "%s-public" (include "cockroachdb.fullname" .) | quote }}
     - {{ printf "%s-public.%s" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
+    - {{ printf "%s-public.%s.svc" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
     - {{ printf "%s-public.%s.svc.%s" (include "cockroachdb.fullname" .) .Release.Namespace .Values.clusterDomain | quote }}
-    - {{ printf "*.%s" (include "cockroachdb.fullname" .) | quote }}
-    - {{ printf "*.%s.%s" (include "cockroachdb.fullname" .) .Release.Namespace | quote }}
-    - {{ printf "*.%s.%s.svc.%s" (include "cockroachdb.fullname" .) .Release.Namespace .Values.clusterDomain | quote }}
 {{- with .Values.tls.certs.certManager.dnsNames -}}
 {{ toYaml . | nindent 4 }}
 {{- end}}
