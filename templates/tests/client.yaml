@@ -22,7 +22,7 @@ spec:
       projected:
         sources:
         - secret:
-            name: {{ .Values.tls.certs.clientRootSecret }}
+            name: {{ tempalte "cockroachdb.fullname" }}-root
             items:
             - key: ca.crt
               path: ca.crt
@@ -35,7 +35,7 @@ spec:
               mode: 0400
       {{- else }}
       secret:
-        secretName: {{ .Values.tls.certs.clientRootSecret }}
+        secretName: {{ tempalte "cockroachdb.fullname" }}-root
         defaultMode: 0400
       {{- end }}
   {{- end }}

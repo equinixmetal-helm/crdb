@@ -27,10 +27,10 @@ spec:
     size: 521
   commonName: root
   subject:
-    {{- with .Values.tls.certs.certManagerIssuer.organizations }} 
+    {{- with .Values.tls.certs.certManagerIssuer.organizations }}
     organizations: {{- toYaml . | nindent 6 }}
     {{- end }}
-  secretName: {{ .Values.tls.certs.clientRootSecret }}
+  secretName: {{ tempalte "cockroachdb.fullname" }}-root
   issuerRef:
     name: {{ .Values.tls.certs.certManagerIssuer.name }}
     kind: {{ .Values.tls.certs.certManagerIssuer.kind }}
