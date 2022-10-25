@@ -1,5 +1,5 @@
 kind: PodDisruptionBudget
-apiVersion: policy/v1beta1
+apiVersion: {{ template "common.capabilities.policy.apiVersion" . }}
 metadata:
   name: {{ template "cockroachdb.fullname" . }}-budget
   namespace: {{ .Release.Namespace | quote }}
