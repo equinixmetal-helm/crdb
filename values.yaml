@@ -1,9 +1,8 @@
 clusterInfo: {}
 
-# Generated file, DO NOT EDIT. Source: build/templates/values.yaml
 image:
   repository: cockroachdb/cockroach
-  tag: v21.1.6
+  tag: v22.1.11
   pullPolicy: IfNotPresent
   credentials: {}
     # registry: docker.io
@@ -34,7 +33,7 @@ conf:
   # Total size in bytes for caches, shared evenly if there are multiple
   # storage devices. Size suffixes are supported (e.g. `1GB` and `1GiB`).
   # A percentage of physical memory can also be specified (e.g. `.25`).
-  cache: 25%
+  cache: 1GB
 
   # Sets a name to verify the identity of a cluster.
   # The value must match between all nodes specified via `conf.join`.
@@ -110,7 +109,7 @@ conf:
   # including prepared queries and intermediate data rows during query
   # execution. Accepts numbers interpreted as bytes, size suffixes
   # (e.g. `1GB` and `1GiB`) or a percentage of physical memory (e.g. `.25`).
-  max-sql-memory: 25%
+  max-sql-memory: 1GB
 
   # An ordered, comma-separated list of key-value pairs that describe the
   # topography of the machine. Topography might include country, datacenter
