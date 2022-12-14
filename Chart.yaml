@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 name: cockroachdb
-version: 2.3.0
+version: 2.3.1
 appVersion: v22.1.11
 description: Multi-k8s cockroach deployment
 sources:
@@ -11,5 +11,5 @@ dependencies:
     version: "v0.0.124"
     repository: "https://stakater.github.io/stakater-charts"
   - name: common
-    version: 2.2.0
+    version: 2.2.2
     repository: https://charts.bitnami.com/bitnami
