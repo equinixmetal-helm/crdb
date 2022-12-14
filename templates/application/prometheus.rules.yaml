@@ -169,7 +169,7 @@ spec:
     - alert: CockroachDBUnavailableRanges
       annotations:
         summary: Instance {{`{{`}} $labels.instance {{`}}`}} has {{`{{`}} $value {{`}}`}} unavailable ranges
-      expr: (sum by(instance, cluster) (ranges_unavailable{job=~"{{ $fullname }}-."})) >
+      expr: (sum by(instance, cluster, namespace) (ranges_unavailable{job=~"{{ $fullname }}-."})) >
         0
       for: 10m
       labels:
@@ -177,7 +177,7 @@ spec:
     - alert: CockroachDBNoLeaseRanges
       annotations:
         summary: Instance {{`{{`}} $labels.instance {{`}}`}} has {{`{{`}} $value {{`}}`}} ranges without leases
-      expr: (sum by(instance, cluster) (replicas_leaders_not_leaseholders{job=~"{{ $fullname }}-."})) > 0
+      expr: (sum by(instance, cluster, namespace) (replicas_leaders_not_leaseholders{job=~"{{ $fullname }}-."})) > 0
       for: 10m
       labels:
         severity: warning
