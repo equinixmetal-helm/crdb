@@ -9,6 +9,7 @@ sources:
 dependencies:
   - name: reloader
     version: "v0.0.124"
+    condition: reloader.enabled
     repository: "https://stakater.github.io/stakater-charts"
   - name: common
     version: 2.2.2
