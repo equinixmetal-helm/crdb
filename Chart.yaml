@@ -12,5 +12,5 @@ dependencies:
     condition: reloader.enabled
     repository: "https://stakater.github.io/stakater-charts"
   - name: common
-    version: 2.2.3
+    version: 2.2.4
     repository: https://charts.bitnami.com/bitnami
