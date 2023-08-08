@@ -2,7 +2,7 @@
 apiVersion: v2
 name: cockroachdb
 version: 2.4.0
-appVersion: v23.1.4
+appVersion: v23.1.8
 description: Multi-k8s cockroach deployment
 sources:
   - https://github.com/cockroachdb/cockroach
