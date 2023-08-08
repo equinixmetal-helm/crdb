@@ -35,7 +35,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
+      {{- if .Values.tls.enabled }}
       serviceAccountName: {{ template "cockroachdb.tls.serviceAccount.name" . }}
+      {{- end }}
       setHostnameAsFQDN: true
       containers:
       - name: cockroachdb-toolbox
@@ -48,13 +50,16 @@ spec:
         - name: COCKROACH_CERTS_DIR
           value: /cockroach/cockroach-certs/
         imagePullPolicy: IfNotPresent
+        {{- if .Values.tls.enabled }}
         volumeMounts:
         - name: client-certs
           mountPath: /cockroach/cockroach-certs/
+        {{- end }}
         command:
         - sleep
         - "2147483648" # 2^31
       terminationGracePeriodSeconds: 0
+      {{- if .Values.tls.enabled }}
       volumes:
       - name: client-certs
         projected:
@@ -72,4 +77,5 @@ spec:
                     - key: tls.key
                       path: client.root.key
             defaultMode: 256
+      {{- end }}
 {{- end }}
