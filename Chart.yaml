@@ -8,7 +8,7 @@ sources:
   - https://github.com/cockroachdb/cockroach
 dependencies:
   - name: reloader
-    version: "v1.0.29"
+    version: "1.0.35"
     condition: reloader.enabled
     repository: "https://stakater.github.io/stakater-charts"
   - name: common
