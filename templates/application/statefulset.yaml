@@ -2,7 +2,7 @@ kind: StatefulSet
 apiVersion: {{ template "cockroachdb.statefulset.apiVersion" . }}
 metadata:
   annotations:
-    secret.reloader.stakater.com/reload: {{ template "cockroachdb.name" . }}-node
+    secret.reloader.stakater.com/reload: {{ template "cockroachdb.fullname" . }}-node
   {{- with .Values.statefulset.statefulsetAnnotations }}
      {{- toYaml . | nindent 4 }}
   {{- end }}
