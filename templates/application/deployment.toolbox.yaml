@@ -58,6 +58,8 @@ spec:
         command:
         - sleep
         - "2147483648" # 2^31
+        securityContext:
+          readOnlyRootFilesystem: true
       terminationGracePeriodSeconds: 0
       {{- if .Values.tls.enabled }}
       volumes:

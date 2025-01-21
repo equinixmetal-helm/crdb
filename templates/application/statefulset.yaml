@@ -69,6 +69,8 @@ spec:
               mountPath: /cockroach-certs/
             - name: certs-secret
               mountPath: /certs/
+          securityContext:
+            readOnlyRootFilesystem: true
       {{- end }}
     {{- end }}
     {{- if or .Values.statefulset.nodeAffinity .Values.statefulset.podAffinity .Values.statefulset.podAntiAffinity }}
@@ -277,6 +279,8 @@ spec:
         {{- with .Values.statefulset.resources }}
           resources: {{- toYaml . | nindent 12 }}
         {{- end }}
+          securityContext:
+            readOnlyRootFilesystem: true
       volumes:
         - name: datadir
         {{- if .Values.storage.persistentVolume.enabled }}
