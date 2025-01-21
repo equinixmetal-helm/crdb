@@ -5,7 +5,7 @@ metadata:
   name: {{ template "cockroachdb.name" . }}-toolbox
   annotations:
     argocd.argoproj.io/sync-wave: '10'
-    secret.reloader.stakater.com/reload: {{ template "cockroachdb.fullname" . }}-root
+    secret.reloader.stakater.com/reload: {{ .Values.fullnameOverride | default (template "cockroachdb.fullname" .) }}-root
   {{- with .Values.toolbox.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
