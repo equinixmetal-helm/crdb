@@ -2,7 +2,7 @@ clusterInfo: {}
 
 image:
   repository: cockroachdb/cockroach
-  tag: v23.1.22
+  tag: v23.2.20
   pullPolicy: IfNotPresent
   credentials: {}
     # registry: docker.io
